@@ -3,7 +3,7 @@ from mklearn.core.mk_types import *
 from typing import Tuple
 
 
-class TrainTestSplitter:
+class DataSetSplitter:
     def __init__(self, test_ratio: float = 0.2, seed: int = None):
         self.train_test_split_ratio_ = test_ratio
         assert 0.0 <= self.train_test_split_ratio_ <= 1.0
@@ -25,7 +25,23 @@ class TrainTestSplitter:
         return self.split(data, label)
 
 
-def train_test_split(data: NDArray, label: NDArray, test_ratio: float = 0.2, seed: int = None) -> Tuple[
-    NDArray, NDArray, NDArray, NDArray]:
-    splitter = TrainTestSplitter(test_ratio, seed)
+def train_test_split(data: NDArray,
+                     label: NDArray,
+                     test_ratio: float = 0.2,
+                     seed: int = None) -> Tuple[NDArray, NDArray, NDArray, NDArray]:
+    splitter = DataSetSplitter(test_ratio, seed)
     return splitter(data, label)
+
+
+def train_test_validate_split(data: NDArray,
+                              label: NDArray,
+                              test_ratio: float = 0.2,
+                              validate_ratio: float = 0.2,
+                              seed: int = None) -> Tuple[NDArray, NDArray, NDArray, NDArray, NDArray, NDArray]:
+    splitter = DataSetSplitter(test_ratio, seed)
+    train_data, test_data, train_label, test_label = splitter(data, label)
+
+    splitter = DataSetSplitter(validate_ratio, seed)
+    train_data, validate_data, train_label, validate_label = splitter(train_data, train_label)
+
+    return train_data, validate_data, test_data, train_label, validate_label, test_label
