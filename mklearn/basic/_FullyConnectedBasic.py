@@ -10,6 +10,17 @@ from mklearn.core.mklearn_errors import ShapeError
 
 
 class _FullyConnectedDense(LearnModule):
+    __slots__ = [
+        "activation_fn_type_",
+        "device_",
+        "hidden_layer_cnt_",
+        "hidden_layer_size_",
+        "input_shape_",
+        "layer_lists_",
+        "layer_seq_",
+        "output_shape_"
+    ]
+
     def __init__(self,
                  input_shape: int,
                  output_shape: int,
@@ -18,7 +29,6 @@ class _FullyConnectedDense(LearnModule):
                  device: Union[str, torch.device] = "cpu",
                  activation_type: Optional[Type[nn.Module]] = None):
         super().__init__()
-
         # parameter check
         self.input_shape_: int = input_shape
         self.output_shape_: int = output_shape

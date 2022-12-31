@@ -10,6 +10,23 @@ from mklearn.core.mk_types import *
 
 
 class ConvTransposeNDimNTimes(LearnModule):
+    __slots__ = [
+        "active_function_type_",
+        "conv_bias_",
+        "conv_dilation_",
+        "conv_first_layer_in_channel_",
+        "conv_groups_",
+        "conv_kernel_size_",
+        "conv_output_channels_",
+        "conv_padding_",
+        "conv_padding_modes_",
+        "conv_stride_",
+        "conv_transpose_n_times_",
+        "conv_transpose_seq_",
+        "convolution_transpose_layer_lists_",
+        "convolution_transpose_layer_type_",
+        "device_",
+    ]
 
     def __init__(self,
                  first_conv_layer_in_channel: int,

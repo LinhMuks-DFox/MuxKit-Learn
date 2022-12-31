@@ -10,6 +10,26 @@ from mklearn.core.mk_types import *
 
 
 class ConvNDimNTimes(LearnModule):
+    __slots__ = [
+        "active_function_type_",
+        "conv_bias_",
+        "conv_dilation_",
+        "conv_groups_",
+        "conv_kernel_size_",
+        "conv_layer_output_channels_",
+        "conv_layer_type_",
+        "conv_layers_lists_",
+        "conv_n_times_",
+        "conv_padding_",
+        "conv_padding_mode_",
+        "conv_seq_",
+        "conv_stride_",
+        "device_",
+        "first_conv_layer_in_channel_",
+        "input_dim_",
+        "receptive_field_",
+        "shape_after_convolution_"
+    ]
 
     def __init__(self,
                  input_dim: NDArray,

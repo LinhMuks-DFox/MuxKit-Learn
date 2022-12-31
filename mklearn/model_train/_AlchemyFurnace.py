@@ -66,8 +66,19 @@ class AlchemyParameters:
 
 
 class AlchemyFurnace:
+    __slots__ = [
+        "metadata_",
+        "model_",
+        "save_path",
+        "test_kernel_",
+        "test_loss_",
+        "train_kernel_",
+        "train_loss_"
+    ]
+
     def __init__(self, metadata: AlchemyParameters):
         self.metadata_ = metadata
+
         if self.metadata_.verbose:
             print("Initializing Alchemy Furnace...")
 
