@@ -3,8 +3,8 @@ from typing import Optional, Union, Type
 import torch
 import torch.nn as nn
 
-from ._FullyConnectedBasic import _FullyConnectedDense
 from mklearn.core.mk_types import *
+from ._FullyConnectedBasic import _FullyConnectedDense
 
 
 class FullyConnectedRegressor(_FullyConnectedDense):

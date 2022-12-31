@@ -1,6 +1,8 @@
-import numpy as np
-from mklearn.core.mk_types import *
 from typing import Tuple
+
+import numpy as np
+
+from mklearn.core.mk_types import *
 
 
 class DataSetSplitter:

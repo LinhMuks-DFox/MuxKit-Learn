@@ -5,8 +5,8 @@ import torch
 import torch.nn as nn
 
 from mklearn.core.learn_module import LearnModule
-from mklearn.core.mklearn_errors import ShapeError
 from mklearn.core.mk_types import *
+from mklearn.core.mklearn_errors import ShapeError
 
 
 class _FullyConnectedDense(LearnModule):

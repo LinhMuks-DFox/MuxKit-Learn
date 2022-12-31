@@ -7,7 +7,6 @@ from mklearn.core.mk_types import *
 from ._FullyConnectedBasic import _FullyConnectedDense
 
 
-
 class FullConnectedClassifier(_FullyConnectedDense):
 
     def __init__(self,
