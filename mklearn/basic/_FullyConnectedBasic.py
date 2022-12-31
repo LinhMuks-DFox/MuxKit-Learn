@@ -6,8 +6,7 @@ import torch.nn as nn
 
 from mklearn.core.learn_module import LearnModule
 from mklearn.core.mklearn_errors import ShapeError
-
-NDArray = np.ndarray
+from mklearn.core.mk_types import *
 
 
 class _FullyConnectedDense(LearnModule):

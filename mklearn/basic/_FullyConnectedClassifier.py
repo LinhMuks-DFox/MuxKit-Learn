@@ -1,12 +1,11 @@
 from typing import *
 
-import numpy as np
 import torch
 import torch.nn as nn
 
+from mklearn.core.mk_types import *
 from ._FullyConnectedBasic import _FullyConnectedDense
 
-NDArray = np.ndarray
 
 
 class FullConnectedClassifier(_FullyConnectedDense):
