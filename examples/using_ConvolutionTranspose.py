@@ -38,7 +38,7 @@ class ConvolutionTransposeDemo(ExampleRunnable):
         self.demo_data = self.dataset[0][0].unsqueeze(0)
 
         self.conv_transpose = ConvoNTime.ConvTransposeNDimNTimes(
-            first_conv_layer_in_channel=self.test_output_channel[-1],
+            input_dim=np.array([self.test_output_channel[-1], *self.conv.shape_after_convolution_]),
             conv_transpose_n_times=self.convolution_times,
             kernel_size=self.conv_kernel_size,
             out_channels=np.flipud(self.test_output_channel),

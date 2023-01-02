@@ -29,7 +29,7 @@ class ConvTransposeNDimNTimes(LearnModule):
     ]
 
     def __init__(self,
-                 first_conv_layer_in_channel: int,
+                 input_dim: NDArray,
                  conv_transpose_n_times: int,
                  kernel_size: Optional[NDArray] = None,
                  out_channels: Optional[NDArray] = None,
@@ -46,7 +46,7 @@ class ConvTransposeNDimNTimes(LearnModule):
                  ):
         super(ConvTransposeNDimNTimes, self).__init__()
         # parameters check
-        self.conv_first_layer_in_channel_ = first_conv_layer_in_channel
+        self.conv_first_layer_in_channel_ = input_dim[0]
         self.conv_transpose_n_times_: int = conv_transpose_n_times
         self.conv_kernel_size_: NDArray = kernel_size \
             if kernel_size is not None else \
@@ -64,7 +64,12 @@ class ConvTransposeNDimNTimes(LearnModule):
             if dilation is not None else \
             np.array([[1, 1] for _ in range(self.conv_transpose_n_times_)])
         self.convolution_transpose_layer_type_ = convolution_transpose_layer_type \
-            if convolution_transpose_layer_type is not None else nn.ConvTranspose2d
+            if convolution_transpose_layer_type is not None else \
+            {
+                1: nn.ConvTranspose1d,
+                2: nn.ConvTranspose2d,
+                3: nn.ConvTranspose3d
+            }.get(len(input_dim) - 1)
         self.conv_groups_: List[int] = groups \
             if groups is not None else \
             [1 for _ in range(self.conv_transpose_n_times_)]
@@ -77,6 +82,15 @@ class ConvTransposeNDimNTimes(LearnModule):
         self.active_function_type_ = active_function \
             if active_function is not None else nn.ReLU
         self.device_ = device
+
+        self.shape_after_n_time_convolution_transpose_ = self.shape_after_n_time_convolution_transpose(
+            ndim_shape=input_dim[1:],
+            n_time=self.conv_transpose_n_times_,
+            kernel_size=self.conv_kernel_size_,
+            padding=self.conv_padding_,
+            stride=self.conv_stride_,
+            dilation=self.conv_dilation_,
+        )
 
         # convolution transpose input layer
         self.convolution_transpose_layer_lists_ = [
