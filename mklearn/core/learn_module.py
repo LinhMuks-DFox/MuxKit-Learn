@@ -4,7 +4,7 @@ from typing import *
 import torch.nn
 
 
-class LearnModule(object, torch.nn.Module):
+class LearnModule(torch.nn.Module):
 
     @abc.abstractmethod
     def to_device(self, device: Union[str, torch.device]):
