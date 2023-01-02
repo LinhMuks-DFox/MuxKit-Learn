@@ -8,7 +8,7 @@ def create_symmetries_conv_transpose(cov: ConvNDimNTimes,
         raise TypeError("Can not build ConvTransposeNDimNTimes instance from a non-ConvNDimNTimes instance.")
 
     return ConvTransposeNDimNTimes(
-        first_conv_layer_in_channel=cov.conv_layer_output_channels_[-1],
+        input_dim=cov.conv_layer_output_channels_[-1],
         conv_transpose_n_times=cov.conv_n_times_,
         kernel_size=cov.conv_kernel_size_[::-1] if inverse_conv_property else cov.conv_kernel_size_,
         out_channels=cov.conv_layer_output_channels_[
