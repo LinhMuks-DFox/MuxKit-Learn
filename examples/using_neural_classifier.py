@@ -4,7 +4,7 @@ import torchvision.datasets as datasets
 import torchvision.transforms as transform
 
 from examples.example_module import ExampleRunnable
-from mklearn.basic.fully_connected_dense import FullConnectedClassifier
+from mklearn.basic.fully_connected_nn import FullConnectedClassifier
 from mklearn.model_train.model_training import AlchemyFurnace, AlchemyParameters
 
 data_path = "../data"

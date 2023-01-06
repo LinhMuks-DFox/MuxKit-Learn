@@ -1,3 +1,3 @@
 __all__ = [
-    "fully_connected_dense"
+    "fully_connected_nn"
 ]
