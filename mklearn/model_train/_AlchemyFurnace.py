@@ -84,6 +84,9 @@ class AlchemyFurnace:
 
         if self.metadata_.on_init is not None:
             self.metadata_.on_init(self)
+        self.save_path = os.path.join(self.metadata_.save_path, f"{self.metadata_.model_name}.pt")
+        if self.metadata_.verbose:
+            print(f"Alchemy Furnace save path {self.save_path}")
 
         self.model_ = self.metadata_.model if self.metadata_.load_model is False else None
         if self.metadata_.load_model:
@@ -113,10 +116,6 @@ class AlchemyFurnace:
         if self.metadata_.after_init is not None:
             self.metadata_.after_init(self)
 
-        self.save_path = os.path.join(self.metadata_.save_path, f"{self.metadata_.model_name}.pt")
-        if self.metadata_.verbose:
-            print(f"Alchemy Furnace save path {self.save_path}")
-
     def move_model_to_device(self, device: Optional[Union[str, torch.device]] = None):
         if device is None and self.metadata_.device is None:
             raise ValueError("No device specified.")
@@ -137,6 +136,7 @@ class AlchemyFurnace:
 
         if self.metadata_.on_train is not None:
             self.metadata_.on_train(self)
+        self.metadata_.model.train()
         for epoch in range(self.metadata_.epochs):
             epoch_loss = []
             if self.metadata_.verbose:
@@ -174,7 +174,6 @@ class AlchemyFurnace:
             self.metadata_.after_train(self)
         return self
 
-    @torch.no_grad()
     def score(self, validation_set: Optional[torch.utils.data.DataLoader] = None):
         if self.model_ is None:
             raise AttributeError("model undefined")
@@ -189,7 +188,7 @@ class AlchemyFurnace:
         if score_loader is None:
             raise ValueError(
                 "Score failed. validation_loader in self.metadata_ is none, and validation_set arg is none.")
-
+        self.model_.train(False)
         with torch.no_grad():
             test_batch_loss = []
             if self.metadata_.verbose:
