@@ -33,8 +33,10 @@ class _FullyConnectedDense(LearnModule):
         self.input_shape_: int = input_shape
         self.output_shape_: int = output_shape
         self.hidden_layer_cnt_: int = hidden_layer_cnt if hidden_layer_cnt is not None else 3
-        self.hidden_layer_size_: NDArray = hidden_layer_size if hidden_layer_size is not None else np.array(
-            [input_shape // 2, input_shape // 4, self.output_shape_])
+        self.hidden_layer_size_: NDArray = hidden_layer_size \
+            if hidden_layer_size is not None else np.random.randint(input_shape // 2,
+                                                                    input_shape * 2,
+                                                                    self.hidden_layer_cnt_)
         self.activation_fn_type_: Type[nn.Module] = activation_type if activation_type is not None else nn.ReLU
         if self.hidden_layer_cnt_ != len(self.hidden_layer_size_):
             raise ShapeError("hidden layer count not equal to hidden_layer_size_")
@@ -43,8 +45,8 @@ class _FullyConnectedDense(LearnModule):
         self.device_ = device
 
         # build layer sequence
-        self.layer_lists_ = [nn.Linear(in_features=self.input_shape_, out_features=self.hidden_layer_size_[0]),
-                             self.activation_fn_type_()]
+        self.layer_lists_ = [nn.Linear(in_features=self.input_shape_,
+                                       out_features=self.hidden_layer_size_[0]), self.activation_fn_type_()]
 
         # build hidden layers
         for i in range(1, self.hidden_layer_cnt_ - 1):
@@ -64,6 +66,7 @@ class _FullyConnectedDense(LearnModule):
             raise AttributeError("Model was not initialized correctly")
         self.device_ = device
         self.layer_seq_.to(self.device_ if isinstance(self.device_, torch.device) else torch.device(self.device_))
+        return self
 
     def summary(self) -> str:
         return "_FullyConnectedDense:" + str(self.properties_dict())
