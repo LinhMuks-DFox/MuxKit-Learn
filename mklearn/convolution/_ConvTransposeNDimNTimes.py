@@ -134,6 +134,7 @@ class ConvTransposeNDimNTimes(LearnModule):
     def to_device(self, device: Union[str, torch.device]):
         self.device_ = device if isinstance(device, torch.device) else torch.device(device)
         self.conv_transpose_seq_.to(self.device_)
+        return self
 
     @staticmethod
     def shape_after_conv_transpose(
