@@ -11,3 +11,8 @@ class MKitLearnNotImplementedError(MKitLearnBasicError, NotImplementedError):
 class ShapeError(MKitLearnBasicError, ValueError):
     """Raised when a shape is not valid."""
     pass
+
+
+class InvalidComparison(MKitLearnBasicError, TypeError):
+    """Raised when a comparison is not valid."""
+    pass
