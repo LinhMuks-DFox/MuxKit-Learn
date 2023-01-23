@@ -264,7 +264,6 @@ class AlchemyFurnace:
 
         if self.model_ is None:
             raise AttributeError("model undefined")
-
         ret = self.model_(sample)
 
         if self.metadata_.after_forward is not None:
